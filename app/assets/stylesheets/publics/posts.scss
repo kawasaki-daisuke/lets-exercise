@@ -1,0 +1,48 @@
+// Place all the styles related to the publics::posts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+*{
+	padding: 0;
+	margin: 0;
+}
+
+table, tbody, thead, tr, th, td {
+    display: block;
+}
+ 
+.post-show {
+	font-size: 25px;
+}
+
+.p1 {
+	margin-top:20px;
+	font-size: 25px;
+}
+
+.row {
+	border: solid 1px black;
+	padding-bottom: 30px;
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+
+.post-index2 {
+	font-size: 15px;
+}
+
+.p2 {
+	margin-top:20px;
+}
+
+.post {
+	font-size: 15px;
+}
+
+.comment-text {
+	font-size: 15px;
+}
+
+.text-right {
+	margin-top:10px;
+}

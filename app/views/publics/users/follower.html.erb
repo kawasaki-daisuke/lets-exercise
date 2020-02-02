@@ -1,0 +1,29 @@
+<%= render :partial => 'layouts/header' %>
+<div class="container">
+  	<div class="row">
+    	<div class="col-md-4 col-md-offset-4">
+    		<table class="table table-striped">
+    			<thead>
+					<tr>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<div class="text-center">
+						<h2><%= "#{@user.name}のフォロー" %></h2>
+						</div>
+								<% @users.each do |user| %>
+							<td>
+								<%= attachment_image_tag user, :profile_image, width:"100px" %>
+								<%= link_to "#{user.name}", publics_user_path(user) %>
+								<% end %>
+							</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="text-center">
+				<%= paginate @users %>
+			</div>
+		</div>
+	</div>
+</div>

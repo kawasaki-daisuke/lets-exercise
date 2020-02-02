@@ -1,0 +1,43 @@
+<%= render :partial => 'layouts/header' %>
+<div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <h1>チャットルーム</h1>
+            <h4>参加者</h4>
+            <% @entries.each do |e| %>
+              <h5><strong><%= e.user.name %></strong></h5>
+            <% end %>
+
+            <hr>
+            <% if @messages.present? %>
+              <% @messages.each do |m| %>
+                <div class="chat-box">
+                  <div class="chat-face">
+                    <%= attachment_image_tag m.user, :profile_image, width:"100px" %>
+                  </div>
+                  <div class="chat-area">
+                    <div class="chat-hukidashi">
+                      <strong><%= m.message_content %></strong>
+                      <small>by <strong><%= m.user.name %></strong></small>
+                      <hr>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <h3 class="text-center">メッセージはまだありません</h3>
+            <% end %>
+
+            <%= form_for(@message, url: publics_messages_path, action: :create) do |f| %>
+              <%= f.text_field :message_content, :placeholder => "メッセージを入力して下さい" , :size => 50 %>
+              <%= f.hidden_field :room_id, :value => @room.id %>
+              <br>
+              <div class="text-right">
+                <%= f.submit "投稿する" %>
+              </div>
+            <% end %>
+
+            <%= link_to "ユーザー一覧に戻る", publics_users_path, class:"btn btn-primary" %>
+      </div>
+    </div>
+</div>

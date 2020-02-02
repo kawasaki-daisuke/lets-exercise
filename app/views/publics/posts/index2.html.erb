@@ -1,0 +1,54 @@
+<%= render :partial => 'layouts/header' %>
+<div class="container">
+	<div class="text-center">
+		<h1>投稿一覧</h1>
+	</div>
+	<div class="row">
+	    <div class="col col-lg-4">
+	    </div>
+	    <div class="col col-lg-5">
+	    	<div class="text-right">
+				<%= form_tag publics_posts_path ,:method => 'get' do %>
+			        <%= text_field_tag :search, params[:search] ,placeholder:"投稿を検索" %>
+			        <%= submit_tag " 検索　", :post_content => nil %>
+			    <% end %>
+			</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<% @posts.each do |post| %>
+							<td>
+								<div class="post-index2">
+									<p>投稿者</p>
+										<span><%= post.user.name %></span>
+									<div class = "post_time">
+										<p class="p2">投稿日時</p>
+											<%= link_to  publics_user_post_path(user_id:post.user.id, id:post.id) do %>
+												<span><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></span>
+											<% end %>
+									</div>
+									<div class = "post_image">
+										<p class="p2">画像</p>
+										<span><%= attachment_image_tag post, :post_image, width:"200px" %></span>
+									</div>
+									<div class = "post_training">
+										<p class="p2">トレーニング内容</p>
+										<span><%= post.post_content %></span>
+									</div>
+								</div>
+							</td>
+						<% end %>
+					</tr>
+				</tbody>
+			</table>
+			<div class="text-center">
+				<%= paginate @posts %>
+			</div>
+		</div>
+	</div>
+</div>

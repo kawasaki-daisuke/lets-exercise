@@ -1,0 +1,100 @@
+<%= render :partial => 'layouts/header' %>
+<% if user_signed_in? && current_user.id.to_s == params[:id] %>
+<div class="container">
+  	<div class="row">
+    	<div class="col-md-4 col-md-offset-5">
+			<h1>マイページ</h1>
+			
+
+			
+			<div class= "user-box">
+			<div class = "image2">
+			<span><%= attachment_image_tag @user, :profile_image, width:"150px" %></span>
+			</div>
+
+				<span>名前: <%= @user.name %></span>
+				<p></p>
+				<span>身長: <%= @user.tall %></span>
+				<p></p>
+				<span>体重: <%= @user.weight %></span>
+				<p></p>
+				<p>所属ジム: <%= @user.gym %></p>
+
+			<p><%= link_to "フォロー #{@user.follower.count}", follower_path, class:"btn btn-info" %></p>
+			<p><%= link_to "フォロワー #{@user.followed.count}",followed_path, class:"btn btn-info" %></p>
+			<% unless @user == current_user %>
+				<% if current_user.following?(@user) %>
+			    <%= link_to 'フォロー外す', unfollow_path(@user.id), class:"btn btn-danger", method: :post %>
+			  	<% else %>
+			    <%= link_to 'フォローする', follow_path(@user.id), method: :post %>
+			  	<% end %>
+			<% end %>
+
+			<%= link_to "編集", edit_publics_user_path(@user), class:"btn btn-primary" %>
+
+			<%= link_to "投稿する", new_publics_user_post_path(@user), class:"btn btn-primary" %>
+
+			<%= link_to "投稿一覧", publics_user_posts_path(@user), class:"btn btn-primary" %>
+
+			<%= link_to "退会する", publics_user_path, class:"btn btn-danger",method: :delete, data: {confirm: "削除しますか？"} %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<% else %>
+<div class="container">
+  	<div class="row">
+    	<div class="col-md-4 col-md-offset-5">
+			<h1>ユーザー詳細</h1>
+			<div class= "user-box">
+				<div class = "image2">
+				<span><%= attachment_image_tag @user, :profile_image, width:"150px" %></span>
+				</div>
+				<p></p>
+				<span>名前: <%= @user.name %></span>
+				<p></p>
+				<span>身長: <%= @user.tall %></span>
+				<p></p>
+				<span>体重: <%= @user.weight %></span>
+				<p></p>
+				<p>所属ジム: <%= @user.gym %></p>
+			</div>
+
+			<div class="col col-md-5">
+				<p class="p6"><%= link_to "フォロー #{@user.follower.count}", follower_path, class:"btn btn-info" %></p>
+				<p class="p6"><%= link_to "フォロワー #{@user.followed.count}",followed_path, class:"btn btn-info" %></p>
+				<% unless @user == current_user %>
+					<p class="p6">
+					<% if current_user.following?(@user) %>
+				    <%= link_to 'フォロー外す', unfollow_path(@user.id), class:"btn btn-danger", method: :post %>
+				    </p>
+				  	<% else %>
+				  	<p class="p6">
+				    <%= link_to 'フォローする', follow_path(@user.id), class:"btn btn-primary", method: :post %>
+					</p>
+				  	<% end %>
+				<% end %>
+				
+				<% unless @room.nil? %>
+					<%= form_for(@room, url: publics_rooms_path, action: :create) do |f| %>
+				      <%= fields_for @entry do |e| %>
+				        <%= e.hidden_field :user_id, :value=> @user.id %>
+				      <% end %>
+				      <p class="p6">
+				      <%= f.submit "チャットを始める", class:"btn btn-primary" %>
+				  	  </p>
+				    <% end %>
+				<% else %>
+					<p class="p6">
+					<%= link_to "チャットを始める", publics_room_path(@roomId), class:"btn btn-primary" %>
+				    </p>
+				<% end %>
+				<p class="p6">
+				<%= link_to "投稿一覧", publics_user_posts_path(@user), class:"btn btn-primary" %>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<% end %>
