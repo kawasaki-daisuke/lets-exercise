@@ -1,2 +1,0 @@
-module Publics::MessagesHelper
-end
